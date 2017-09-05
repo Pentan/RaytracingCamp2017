@@ -47,6 +47,6 @@ let img = render.render(scene, camera, async:true)
 // imageProcessor(camera.image)
 
 // finalimage.write
-//_ = ImageWriter.writeBMP(filepath: "output.bmp", width: Int32(img.width), height: Int32(img.height), data: img.buffer)
+_ = ImageWriter.writeBMP(filepath: "output.bmp", width: Int32(img.width), height: Int32(img.height), data: img.buffer)
 
 // done!
