@@ -134,6 +134,27 @@ class Vector4Tests: XCTestCase {
         XCTAssertEqualWithAccuracy(pv.x, 1.0, accuracy:kTestEPS)
     }
     
+    //
+    func testGetSetComponent() {
+        var v0 = Vector4(1.0, 2.0, 3.0, 4.0)
+        // get
+        XCTAssertEqual(v0.componentValue(Vector4.Component.kX), 1.0)
+        XCTAssertEqual(v0.componentValue(Vector4.Component.kY), 2.0)
+        XCTAssertEqual(v0.componentValue(Vector4.Component.kZ), 3.0)
+        XCTAssertEqual(v0.componentValue(Vector4.Component.kW), 4.0)
+        
+        // set
+        v0.setComponentValue(Vector4.Component.kX, -1.0)
+        v0.setComponentValue(Vector4.Component.kY, -2.0)
+        v0.setComponentValue(Vector4.Component.kZ, -3.0)
+        v0.setComponentValue(Vector4.Component.kW, -4.0)
+        XCTAssertEqual(v0.x, -1.0)
+        XCTAssertEqual(v0.y, -2.0)
+        XCTAssertEqual(v0.z, -3.0)
+        XCTAssertEqual(v0.w, -4.0)
+    }
+
+    
     // operator
     func testOperatorAdd() {
         let v0 = Vector4(1.0, 2.0, 3.0, 4.0)
@@ -189,6 +210,7 @@ class Vector4Tests: XCTestCase {
         ("testVector4Dot", testVector4Dot),
         ("testVector4Lerp", testVector4Lerp),
         ("testVector4Proj", testVector4Proj),
+        ("testGetSetComponent", testGetSetComponent),
         ("testOperatorAdd", testOperatorAdd),
         ("testOperatorSub", testOperatorSub),
         ("testOperatorMulScalarBack", testOperatorMulScalarBack),

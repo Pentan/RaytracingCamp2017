@@ -297,7 +297,6 @@ class Matrix4Tests: XCTestCase {
             0.759721, 7.04498, -11.8232, -11.8232], 1e-5))
     }
     
-    /*
     func testMakeOrtho() {
         // TODO
     }
@@ -311,11 +310,27 @@ class Matrix4Tests: XCTestCase {
     }
     
     func testMakeLookAt() {
-        // TODO
+        let eye = Vector3(1.0, 2.0, 3.0)
+        let look = Vector3(2.0, 1.0, -1.0)
+        let up = Vector3(0.0, 1.0, 0.0)
+        let m0 = Matrix4.makeLookAt(eye, look, up)
+        
+        XCTAssertTrue(m0.isEqual([
+            0.970142, 0.0571662, -0.235702, 0.0,
+            -0.0, 0.971825, 0.235702, 0.0,
+            0.242536, -0.228665, 0.942809, 0.0,
+            -1.69775, -1.31482, -3.06413, -3.06413], 1e-5))
     }
     
     func testInverted() {
-        // TODO
+        let m0 = Matrix4(
+            1.34242, 1.64535, 1.85, 0.0,
+            -1.13071, -1.01591, 2.35432, 0.0,
+            0.958851, -3.50154, 0.186233, 0.0,
+            0.759721, 7.04498, -11.8232, -11.8232)
+        let invres = Matrix4.inverted(m0)
+        XCTAssertTrue(invres.valid)
+        XCTAssertTrue((m0 * invres.result).isIdentity())
     }
     
     func testTransposed() {
@@ -337,7 +352,6 @@ class Matrix4Tests: XCTestCase {
     func testScaled() {
         // TODO
     }
-    */
     
     func testMulV3() {
         let v0 = Vector3()

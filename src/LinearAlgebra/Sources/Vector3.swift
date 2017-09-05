@@ -9,6 +9,14 @@ public struct Vector3 {
     public var y:Double
     public var z:Double
     
+    public enum Component: Int {
+        case kX = 0
+        case kY
+        case kZ
+        
+        static let iterate = [kX, kY, kZ]
+    }
+    
     //
     public init() {
         x = 0.0
@@ -158,6 +166,22 @@ public struct Vector3 {
     // utils
     public func toString() -> String {
         return "Vector3(\(x),\(y),\(z))"
+    }
+    
+    public func componentValue(_ i:Component) -> Double {
+        switch i {
+        case .kX: return x
+        case .kY: return y
+        case .kZ: return z
+        }
+    }
+    
+    public mutating func setComponentValue(_ i:Component, _ v:Double) {
+        switch i {
+        case .kX: x = v
+        case .kY: y = v
+        case .kZ: z = v
+        }
     }
     
     // operators

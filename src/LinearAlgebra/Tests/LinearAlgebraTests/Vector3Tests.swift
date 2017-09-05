@@ -4,7 +4,6 @@ import XCTest
 class Vector3Tests: XCTestCase {
     
     //private let kTestEPS = 1e-10
-    
     func testInitNoArg() {
         let v0 = Vector3()
         XCTAssertEqualWithAccuracy(v0.x, 0.0, accuracy: kTestEPS)
@@ -156,6 +155,24 @@ class Vector3Tests: XCTestCase {
         XCTAssertEqualWithAccuracy(projv.z, 0.0, accuracy: kTestEPS)
     }
     
+    //
+    func testGetSetComponent() {
+        var v0 = Vector3(1.0, 2.0, 3.0)
+        // get
+        XCTAssertEqual(v0.componentValue(Vector3.Component.kX), 1.0)
+        XCTAssertEqual(v0.componentValue(Vector3.Component.kY), 2.0)
+        XCTAssertEqual(v0.componentValue(Vector3.Component.kZ), 3.0)
+        
+        // set
+        v0.setComponentValue(Vector3.Component.kX, -1.0)
+        v0.setComponentValue(Vector3.Component.kY, -2.0)
+        v0.setComponentValue(Vector3.Component.kZ, -3.0)
+        XCTAssertEqual(v0.x, -1.0)
+        XCTAssertEqual(v0.y, -2.0)
+        XCTAssertEqual(v0.z, -3.0)
+    }
+    
+    //
     func testOperatorAdd() {
         let v0 = Vector3(1.0, 2.0, 3.0)
         let v1 = Vector3(4.0, 5.0, 6.0)
@@ -228,6 +245,7 @@ class Vector3Tests: XCTestCase {
         ("testVector3Cross", testVector3Cross),
         ("testVector3Lerp", testVector3Lerp),
         ("testVector3Project", testVector3Project),
+        ("testGetSetComponent", testGetSetComponent),
         ("testOperatorAdd", testOperatorAdd),
         ("testOperatorSub", testOperatorSub),
         ("testOperatorMulScalarBack", testOperatorMulScalarBack),

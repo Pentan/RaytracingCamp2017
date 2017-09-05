@@ -497,11 +497,11 @@ public struct Matrix4 {
         return Matrix4.makeFrustum(-right, right, -top, top, near, far);
     }
     
-    static public func makeLookAt(_ eyex:Double, _ eyey:Double, _ eyez:Double, _ lookx:Double, _ looky:Double, _ lookz:Double, _ upx:Double, _ upy:Double, _ upz:Double) -> Matrix4 {
+    static public func makeLookAt(_ eyepos:Vector3, _ lookat:Vector3, _ updir:Vector3) -> Matrix4 {
         var ret = Matrix4();
         
-        let tmpupv = Vector3.normalized(Vector3(upx, upy, upz))
-        let eyev = Vector3.normalized(Vector3(eyex - lookx, eyey - looky, eyez - lookz))
+        let tmpupv = Vector3.normalized(updir)
+        let eyev = Vector3.normalized(eyepos - lookat)
         let sidev = Vector3.normalized(Vector3.cross(tmpupv, eyev))
         let upv = Vector3.normalized(Vector3.cross(eyev, sidev))
         
@@ -525,29 +525,23 @@ public struct Matrix4 {
         ret.m[14] = 0.0;
         ret.m[15] = 1.0;
         
-        return Matrix4.translated(ret, -eyex, -eyey, -eyez);
+        return Matrix4.translated(ret, -eyepos.x, -eyepos.y, -eyepos.z);
     }
     
-    static public func inverted(_ m:Matrix4, _ isinved:inout Bool?) -> Matrix4 {
+    static public func inverted(_ m:Matrix4) -> (result:Matrix4, valid:Bool) {
         var tmpm = m.copy()
         let invres = tmpm.invert()
-        if(isinved != nil) {
-            isinved = invres
-        }
-        return tmpm
+        return (tmpm, invres)
     }
     static public func transposed(_ m:Matrix4) -> Matrix4 {
         var tmpm = m.copy()
         tmpm.transpose()
         return tmpm
     }
-    static public func invTransed(_ m:Matrix4, _ isinved:inout Bool?) -> Matrix4 {
+    static public func invTransed(_ m:Matrix4) -> (result:Matrix4, valid:Bool) {
         var tmpm = m.copy()
         let invres = tmpm.invTrans()
-        if(isinved != nil) {
-            isinved = invres
-        }
-        return tmpm
+        return (tmpm, invres)
     }
     
     static public func translated(_ m:Matrix4, _ tx:Double, _ ty:Double, _ tz:Double) -> Matrix4 {

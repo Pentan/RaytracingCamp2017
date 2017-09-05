@@ -10,6 +10,16 @@ public struct Vector4 {
     public var z:Double
     public var w:Double
     
+    
+    public enum Component: Int {
+        case kX = 0
+        case kY
+        case kZ
+        case kW
+        
+        static let iterate = [kX, kY, kZ]
+    }
+    
     //
     public init() {
         x = 0.0
@@ -177,6 +187,24 @@ public struct Vector4 {
     // utils
     public func toString() -> String {
         return "Vector4(\(x),\(y),\(z),\(w))";
+    }
+    
+    public func componentValue(_ i:Component) -> Double {
+        switch i {
+        case .kX: return x
+        case .kY: return y
+        case .kZ: return z
+        case .kW: return w
+        }
+    }
+    
+    public mutating func setComponentValue(_ i:Component, _ v:Double) {
+        switch i {
+        case .kX: x = v
+        case .kY: y = v
+        case .kZ: z = v
+        case .kW: w = v
+        }
     }
     
     // operators
