@@ -82,7 +82,6 @@ internal class SceneBuilder {
         return scene
     }
     
-    
     static func testScene() -> Scene {
         let scene = Scene()
         
@@ -122,6 +121,37 @@ internal class SceneBuilder {
         obj.setTransform(Matrix4.makeRotation(1.0, 0.0, 0.0, 1.0))
         _ = scene.registerObject(obj)
         
+        
+        return scene
+    }
+    
+    
+    static func sampleScene() -> Scene {
+        let scene = Scene()
+        
+        // add camera
+        let cam = Camera()
+        cam.setLookat(Vector3(0.0, 0.0, 7.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0, 1.0, 0.0))
+        _ = scene.registerCamera(cam)
+        
+        // sky
+        let sky = SkyMaterial()
+        scene.skyMaterial = sky
+        
+        // object setup
+        var mat:Material
+        var geom:Geometry
+        var obj:Object
+        
+        mat = DiffuseMaterial(diffuse:Color(0.2, 0.8, 0.2), emit:Color(0.0, 0.0, 0.0))
+        geom = Sphere(1.0, Vector3(-1.5, 0.0, 0.0))
+        obj = Object(geom, mat)
+        _ = scene.registerObject(obj)
+        
+        mat = DiffuseMaterial(diffuse:Color(0.2, 0.2, 0.8), emit:Color(0.0, 0.0, 0.0))
+        geom = Cube(position:Vector3(1.5, 0.0, 0.0), size:Vector3(2.0, 2.0, 2.0))
+        obj = Object(geom, mat)
+        _ = scene.registerObject(obj)
         
         return scene
     }

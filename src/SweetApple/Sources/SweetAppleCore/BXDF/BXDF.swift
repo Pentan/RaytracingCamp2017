@@ -56,7 +56,7 @@ public class BXDF {
     
     //
     public func typeFlag() -> Int {
-        return kUnknownType
+        return BXDF.kUnknown
     }
     
     public func sample(_ inray:Ray, _ intersect:Intersection, _ rng:Random) -> Sample {

@@ -28,6 +28,7 @@ let scene:Scene
 //scene = SceneBuilder.testScene()
 //scene = SceneBuilder.cornelboxScene()
 scene = SceneBuilder.mainScene()
+//scene = SceneBuilder.sampleScene()
 
 // scene.findCamera()
 let camera = scene.getCamera(0)
@@ -79,19 +80,24 @@ print("depth:(min:\(renderconf.minDepth),max:\(renderconf.maxDepth))")
 //
 let render = Renderer(renderconf)
 
-var progressCount = 1
-let progress = Renderer.ProgressHandler(renderconf.progressInterval, {rndr in
-    let img = rndr.currentImage
-    let countstr = String(progressCount)
-    var progressbase = "progress00000"
-    progressbase.characters.removeLast(countstr.characters.count)
-    let outname = "\(progressbase)\(countstr).bmp"
-    
-    ImageWriter.writeBMP(filepath: outname, width: Int32(img.width), height: Int32(img.height), data: img.buffer)
-    print("\nprogress out \(outname)")
-    //print("progress \(progressCount)")
-    progressCount += 1
-})
+var progress:Renderer.ProgressHandler? = nil
+
+if renderconf.progressInterval > 0.0 {
+    var progressCount = 1
+    progress = Renderer.ProgressHandler(renderconf.progressInterval, {rndr in
+        let img = rndr.currentImage
+        let countstr = String(progressCount)
+        var progressbase = "00000"
+        progressbase.characters.removeLast(countstr.characters.count)
+        let outname = "\(progressbase)\(countstr).bmp"
+        
+        ImageWriter.writeBMP(filepath: outname, width: Int32(img.width), height: Int32(img.height), data: img.buffer)
+        print("\nprogress out \(outname)")
+        //print("progress \(progressCount)")
+        progressCount += 1
+    })
+}
+
 let img = render.render(scene, camera, progress: progress)
 print("\nrender complete")
 // wait and check render
