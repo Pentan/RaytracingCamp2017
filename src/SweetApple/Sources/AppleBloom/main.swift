@@ -3,14 +3,15 @@
 #else
     import Glibc
     
-func dummyForDispatch() -> Int {
-    let pn = getprogname()
-    let buf = UnsafeMutablePointer<Int8>.allocate(capacity: 128)
-    let r = strlcpy(buf, pn, 128)
-    //print("pn:\(String(cString: pn!)),buf:\(String(cString: buf)),r:\(r)")
-    return Int(r)
-}
-_ = dummyForDispatch()
+    import CBSD
+    func dummyForDispatch() -> Int {
+        let pn = getprogname()
+        let buf = UnsafeMutablePointer<Int8>.allocate(capacity: 128)
+        let r = strlcpy(buf, pn, 128)
+        //print("pn:\(String(cString: pn!)),buf:\(String(cString: buf)),r:\(r)")
+        return Int(r)
+    }
+    _ = dummyForDispatch()
     
 #endif
 
