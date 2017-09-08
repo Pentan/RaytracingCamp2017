@@ -528,6 +528,36 @@ public struct Matrix4 {
         return Matrix4.translated(ret, -eyepos.x, -eyepos.y, -eyepos.z);
     }
     
+    static public func makeBasis(_ ivy:Vector3) -> Matrix4 {
+        var vx = Vector3()
+        var tmpmin:Double
+        
+        let ax = abs(ivy.x)
+        let ay = abs(ivy.y)
+        let az = abs(ivy.z)
+        
+        if ax < ay {
+            vx.set(1.0, 0.0, 0.0)
+            tmpmin = ax
+        } else {
+            vx.set(0.0, 1.0, 0.0)
+            tmpmin = ay
+        }
+        
+        if az < tmpmin {
+            vx.set(0.0, 0.0, 1.0)
+            tmpmin = az
+        }
+        
+        let vz = Vector3.normalized(Vector3.cross(vx, ivy))
+        vx = Vector3.normalized(Vector3.cross(ivy, vz))
+        
+        var ret = Matrix4()
+        ret.setBasis(vx, ivy, vz)
+        
+        return ret
+    }
+    
     static public func inverted(_ m:Matrix4) -> (result:Matrix4, valid:Bool) {
         var tmpm = m.copy()
         let invres = tmpm.invert()
@@ -601,7 +631,7 @@ public struct Matrix4 {
         let vx = ml.m[0] * vr.x + ml.m[4] * vr.y + ml.m[8] * vr.z + ml.m[12] * vr.w
         let vy = ml.m[1] * vr.x + ml.m[5] * vr.y + ml.m[9] * vr.z + ml.m[13] * vr.w
         let vz = ml.m[2] * vr.x + ml.m[6] * vr.y + ml.m[10] * vr.z + ml.m[14] * vr.w
-        let vw = ml.m[2] * vr.x + ml.m[6] * vr.y + ml.m[10] * vr.z + ml.m[15] * vr.w
+        let vw = ml.m[3] * vr.x + ml.m[7] * vr.y + ml.m[11] * vr.z + ml.m[15] * vr.w
         return Vector4(vx, vy, vz, vw)
     }
     

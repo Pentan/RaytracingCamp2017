@@ -2,51 +2,106 @@
     import Darwin
 #else
     import Glibc
+    
+func dummyForDispatch() -> Int {
+    let pn = getprogname()
+    let buf = UnsafeMutablePointer<Int8>.allocate(capacity: 128)
+    let r = strlcpy(buf, pn, 128)
+    //print("pn:\(String(cString: pn!)),buf:\(String(cString: buf)),r:\(r)")
+    return Int(r)
+}
+_ = dummyForDispatch()
+    
 #endif
+
 
 import Dispatch
 import SweetAppleCore
 import LinearAlgebra
 
-print("Hello, world!")
+print("AplBlm start")
+let startTime = SweetAppleSeconds()
 
 // load scene
-let scene = Scene()
-
-do {
-    // add camera
-    let cam = Camera()
-    cam.setLookat(Vector3(0.0, 0.0, 5.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0, 1.0, 0.0))
-    scene.registerCamera(cam)
-    
-    // object setup
-    let mat = DiffuseMaterial()
-    let geom = Sphere(1.0, Vector3(0.0, 0.0, 0.0))
-    let obj = Object(geom, mat)
-    
-    // add objects
-    scene.registerObject(obj)
-}
+let scene:Scene
+//scene = SceneBuilder.testScene()
+//scene = SceneBuilder.cornelboxScene()
+scene = SceneBuilder.mainScene()
 
 // scene.findCamera()
-let camera = scene.cameras[0]
+let camera = scene.getCamera(0)
 
 // render()
 let renderconf = Renderer.Config()
-renderconf.width = 160
-renderconf.height = 90
-renderconf.tileSize = 40
+/*
+renderconf.width = 640 //160
+renderconf.height = Int(Double(renderconf.width) / camera.sensorAspectRatio()) //90
+ */
+renderconf.width = 1280
+renderconf.height = 720
+renderconf.tileSize = 128
 renderconf.samples = 2
 renderconf.subSamples = 2
+renderconf.renderMode = .kTimeLimit
+renderconf.maxLimitTime = 260.0
+renderconf.verboseInterval = 1.0
+renderconf.progressInterval = 30.0
+renderconf.minDepth = 1
+renderconf.maxDepth = 2
 
+//
+if CommandLine.argc > 2 {
+    if CommandLine.arguments[1] == "-t" {
+        if let t:Double = Double(CommandLine.arguments[2]) {
+            renderconf.maxLimitTime = t
+        }
+    } else if CommandLine.arguments[1] == "-s" {
+        renderconf.renderMode = .kStandard
+    }
+}
+
+switch renderconf.renderMode {
+case .kStandard:
+    print("standard render mode")
+case .kTimeLimit:
+    print("time limit render mode")
+}
+
+print("render size:(\(renderconf.width),\(renderconf.height))")
+print("tile size:\(renderconf.tileSize)")
+print("maxLimitTime:\(renderconf.maxLimitTime)")
+print("progressInterval:\(renderconf.progressInterval)")
+print("sample:\(renderconf.samples)")
+print("subsample:\(renderconf.subSamples)")
+print("depth:(min:\(renderconf.minDepth),max:\(renderconf.maxDepth))")
+
+//
 let render = Renderer(renderconf)
-let img = render.render(scene, camera, async:true)
 
+var progressCount = 1
+let progress = Renderer.ProgressHandler(renderconf.progressInterval, {rndr in
+    let img = rndr.currentImage
+    let countstr = String(progressCount)
+    var progressbase = "progress00000"
+    progressbase.characters.removeLast(countstr.characters.count)
+    let outname = "\(progressbase)\(countstr).bmp"
+    
+    ImageWriter.writeBMP(filepath: outname, width: Int32(img.width), height: Int32(img.height), data: img.buffer)
+    print("\nprogress out \(outname)")
+    //print("progress \(progressCount)")
+    progressCount += 1
+})
+let img = render.render(scene, camera, progress: progress)
+print("\nrender complete")
 // wait and check render
 
 // imageProcessor(camera.image)
 
 // finalimage.write
-_ = ImageWriter.writeBMP(filepath: "output.bmp", width: Int32(img.width), height: Int32(img.height), data: img.buffer)
+ImageWriter.writeBMP(filepath: renderconf.outputFile, width: Int32(img.width), height: Int32(img.height), data: img.buffer)
+print("finale image \(renderconf.outputFile) saved")
+
+let endTime = SweetAppleSeconds()
+print("process time:\(endTime - startTime) [sec]")
 
 // done!

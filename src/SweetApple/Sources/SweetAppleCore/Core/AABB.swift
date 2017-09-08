@@ -63,6 +63,18 @@ public class AABB {
         centroid = (min + max) * 0.5
     }
     
+    public func expand(_ aabb:AABB) {
+        if(aabb.min.x < min.x) { min.x = aabb.min.x }
+        if(aabb.min.y < min.y) { min.y = aabb.min.y }
+        if(aabb.min.z < min.z) { min.z = aabb.min.z }
+        
+        if(aabb.max.x > max.x) { max.x = aabb.max.x }
+        if(aabb.max.y > max.y) { max.y = aabb.max.y }
+        if(aabb.max.z > max.z) { max.z = aabb.max.z }
+        
+        centroid = (min + max) * 0.5
+    }
+    
     public func updateCentroid() {
         centroid = (min + max) * 0.5
     }
@@ -83,6 +95,12 @@ public class AABB {
             let dircomp = ray.direction.componentValue(comp)
             
             if(abs(dircomp) < kLamEPS) {
+                let op = ray.origin.componentValue(comp)
+                let minp = min.componentValue(comp)
+                let maxp = max.componentValue(comp)
+                if op < minp || op > maxp {
+                    return (false, Double.greatestFiniteMagnitude, -1)
+                }
                 continue
             }
             
@@ -116,7 +134,7 @@ public class AABB {
         }
         
         // result
-        return (false, tmin, minaxis)
+        return (true, tmin, minaxis)
     }
 }
 

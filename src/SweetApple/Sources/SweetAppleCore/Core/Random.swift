@@ -14,7 +14,8 @@
 */
 
 public class Random {
-    static private let kDoubleMultiply:Double = 1.0 / 9007199254740992.0
+    static private let kDoubleMultiply0:Double = 1.0 / 9007199254740992.0
+    static private let kDoubleMultiply1:Double = 1.0 / 9007199254740991.0
     
     private var s = Array<UInt64>(repeating: 0, count: 2)
     
@@ -59,12 +60,19 @@ public class Random {
         return result;
     }
     
+    // [0,1)
     public func nextDouble() -> Double {
-        return Double(next() >> 11) * Random.kDoubleMultiply
+        return Double(next() >> 11) * Random.kDoubleMultiply0
     }
     
+    // [0,1]
+    public func nextDouble01() -> Double {
+        return Double(next() >> 11) * Random.kDoubleMultiply1
+    }
+    
+    // (-1,1)
     public func nextDouble11() -> Double {
-        return (nextDouble() * 2.0 + Random.kDoubleMultiply) - 1.0
+        return (nextDouble() * 2.0 + Random.kDoubleMultiply0) - 1.0
     }
     
     public func jump() {

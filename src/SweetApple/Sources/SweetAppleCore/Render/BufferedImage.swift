@@ -4,7 +4,7 @@
     import Glibc
 #endif
 
-public class BufferdImage : Image {
+public class BufferedImage : Image {
     public var buffer:[Color] = []
     
     public override init(_ w:Int, _ h:Int) {
@@ -16,6 +16,18 @@ public class BufferdImage : Image {
     
     public init(_ img:Image) {
         super.init(img.width, img.height)
+        for iy in 0..<height {
+            for ix in 0..<width {
+                buffer.append(img.color(ix, iy))
+            }
+        }
+    }
+    
+    public func scan(_ img:Image) {
+        width = img.width
+        height = img.height
+        
+        buffer.removeAll()
         for iy in 0..<height {
             for ix in 0..<width {
                 buffer.append(img.color(ix, iy))

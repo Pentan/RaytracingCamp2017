@@ -3,6 +3,14 @@ import XCTest
 import LinearAlgebra
 
 class SweetAppleCoreTests: XCTestCase {
+    /*
+    func testTime() {
+        let t0 = SweetAppleSeconds()
+        sleep(1)
+        let t1 = SweetAppleSeconds()
+        XCTAssertEqualWithAccuracy(t1 - t0, 1.0, accuracy: 0.01)
+    }
+     */
     
     func testBasicFlow() {
         // build scene
@@ -24,11 +32,19 @@ class SweetAppleCoreTests: XCTestCase {
             // add objects
             scene.registerObject(obj)
             XCTAssertEqual(scene.objects.count, 1, "register object")
+            
+            // hit test
+            let rng = Random()
+            let ray = cam.makeRay(0.0, 0.0, rng)
+            let isect = Intersection()
+            let ishit = scene.intersect(ray, isect)
+            XCTAssertTrue(ishit, "ray hit test")
         }
         
+        /*
         // render
         do {
-            let cam = scene.cameras[0]
+            let cam = scene.getCamera(0)
             
             let renderconf = Renderer.Config()
             renderconf.width = 160
@@ -38,11 +54,11 @@ class SweetAppleCoreTests: XCTestCase {
             renderconf.subSamples = 2
             
             let render = Renderer(renderconf)
-            render.render(scene, cam, async:true)
+            render.render(scene, cam)
             
             
         }
-        
+        */
         
     }
 

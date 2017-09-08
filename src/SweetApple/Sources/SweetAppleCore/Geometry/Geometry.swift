@@ -19,7 +19,7 @@ public class Geometry {
         return AABB(Vector3(), Vector3())
     }
     
-    public func isIntersect(_ ray:Ray, _ isect:inout Intersection) -> Bool {
+    public func isIntersect(_ ray:Ray, _ isect:Intersection) -> Bool {
         return false;
     }
     

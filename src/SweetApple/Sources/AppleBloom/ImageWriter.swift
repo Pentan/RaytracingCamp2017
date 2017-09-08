@@ -9,6 +9,7 @@ import LinearAlgebra
 
 public class ImageWriter {
     // write as BMP
+    @discardableResult
     static public func writeBMP(filepath:String, width:Int32, height:Int32, data:Array<Color>, gamma:Double = 2.2) -> Bool {
         
         // little endian put
@@ -26,6 +27,10 @@ public class ImageWriter {
         //
         func packU8(_ x:Double) -> Int32 {
             var c = x
+            if x.isNaN || x.isInfinite {
+                return 0
+            }
+            
             if c < 0.0 {
                 c = 0.0
             }
@@ -78,7 +83,7 @@ public class ImageWriter {
             }
             
             fclose(f)
-            print("BMP saved: \(filepath)")
+            //print("BMP saved: \(filepath)")
             
             return true
         }

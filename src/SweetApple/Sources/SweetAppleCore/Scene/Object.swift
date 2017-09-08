@@ -76,14 +76,16 @@ public class Object : SceneNode {
     }
     
     public func boundsAABB() -> AABB {
-        return geometry.transfomredAABB(transform)
+        let aabb = geometry.transfomredAABB(transform)
+        aabb.dataId = objectId
+        return aabb
     }
     
     //
-    public func isIntersect(_ ray:Ray, _ intersect:inout Intersection) -> Bool {
+    public func isIntersect(_ ray:Ray, _ intersect:Intersection) -> Bool {
         let tray = Ray.makeTransformed(ray, iTransform)
         
-        if geometry.isIntersect(tray, &intersect) {
+        if geometry.isIntersect(tray, intersect) {
             // fix transform
             // position
             intersect.position = Matrix4.transformV3(transform, intersect.position)

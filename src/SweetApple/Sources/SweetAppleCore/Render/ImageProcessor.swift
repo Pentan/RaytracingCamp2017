@@ -4,6 +4,6 @@
     import Glibc
 #endif
 
-class ImageProcessor {
-    
+public protocol ImageProcessor {
+    func apply(_ img:BufferedImage)
 }

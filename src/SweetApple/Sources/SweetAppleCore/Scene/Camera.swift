@@ -28,8 +28,8 @@ public class Camera : SceneNode {
     
     public var focalLength:Double      = 28.0   // [mm]
     public var fNumber:Double          = 0.0	// [focal length / diameter of entrance pupil]
-    public var sensorWidth:Double      = 36.0	// [mm]
-    public var sensorHeight:Double     = 24.0	// [mm]
+    public var sensorWidth:Double      = 32.0	// [mm]
+    public var sensorHeight:Double     = 18.0	// [mm]
     public var focusDistance:Double    = 1.0	// [m]
     
     public var apertuer:Aperture

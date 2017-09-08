@@ -322,6 +322,20 @@ class Matrix4Tests: XCTestCase {
             -1.69775, -1.31482, -3.06413, -3.06413], 1e-5))
     }
     
+    func testMakeBasis() {
+        let v0 = Vector3.normalized(Vector3(1.0, 2.0, 3.0))
+        var m0 = Matrix4.makeBasis(v0)
+        m0.transpose()
+        let vx = Matrix4.transformV3(m0, Vector3(1.0, 0.0, 0.0))
+        let vy = Matrix4.transformV3(m0, Vector3(0.0, 1.0, 0.0))
+        let vz = Matrix4.transformV3(m0, Vector3(0.0, 0.0, 1.0))
+        
+        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vx), 0.0, accuracy: kTestEPS, "bad transformed x")
+        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vy), 1.0, accuracy: kTestEPS, "bad transformed y")
+        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vz), 0.0, accuracy: kTestEPS, "bad transformed z")
+        
+    }
+    
     func testInverted() {
         let m0 = Matrix4(
             1.34242, 1.64535, 1.85, 0.0,
@@ -332,6 +346,7 @@ class Matrix4Tests: XCTestCase {
         XCTAssertTrue(invres.valid)
         XCTAssertTrue((m0 * invres.result).isIdentity())
     }
+    
     
     func testTransposed() {
         // TODO

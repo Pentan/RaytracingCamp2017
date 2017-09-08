@@ -39,7 +39,7 @@ public class Sphere : Geometry {
         return ret
     }
     
-    public override func isIntersect(_ ray:Ray, _ intersect:inout Intersection) -> Bool {
+    public override func isIntersect(_ ray:Ray, _ intersect:Intersection) -> Bool {
         let p_o = position - ray.origin
         let b = Vector3.dot(p_o, ray.direction)
         let D4 = b * b - Vector3.dot(p_o, p_o) + radius * radius
@@ -67,7 +67,7 @@ public class Sphere : Geometry {
         intersect.hitNormal = intersect.geometryNormal
         intersect.materialId = 0
         
-        return true;
+        return true
     }
     
     public override func makeSamplePoint(_ rng: Random) -> Geometry.SamplePoint {
