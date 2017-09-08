@@ -8,5 +8,8 @@ let package = Package(
         Target(name: "AppleBloom", dependencies: ["SweetAppleCore", "LinearAlgebra"]),
         Target(name: "SweetAppleCore", dependencies: ["LinearAlgebra"]),
         Target(name: "LinearAlgebra"),
+    ],
+    exclude: [
+        "Sources/CBSD"
     ]
 )

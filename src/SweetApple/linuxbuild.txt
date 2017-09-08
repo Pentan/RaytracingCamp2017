@@ -1,0 +1,2 @@
+swift build -c release -Xswiftc -I./Sources -Xswiftc -static-executable
+
