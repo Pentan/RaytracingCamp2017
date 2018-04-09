@@ -41,7 +41,7 @@ renderconf.height = Int(Double(renderconf.width) / camera.sensorAspectRatio()) /
  */
 renderconf.width = 1280
 renderconf.height = 720
-renderconf.tileSize = 128
+renderconf.tileSize = 64
 renderconf.samples = 2
 renderconf.subSamples = 2
 renderconf.renderMode = .kTimeLimit
