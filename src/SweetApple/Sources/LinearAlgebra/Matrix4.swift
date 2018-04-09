@@ -316,7 +316,7 @@ public struct Matrix4 {
                 }
             }
             if maxIndex != i {
-                swap(&rowIndex[i], &rowIndex[maxIndex])
+                rowIndex.swapAt(i, maxIndex)
             }
             
             // error
@@ -372,12 +372,12 @@ public struct Matrix4 {
     }
     
     public mutating func transpose() {
-        swap(&m[1], &m[4])
-        swap(&m[2], &m[8])
-        swap(&m[3], &m[12])
-        swap(&m[6], &m[9])
-        swap(&m[7], &m[13])
-        swap(&m[11], &m[14])
+        m.swapAt(1, 4)
+        m.swapAt(2, 8)
+        m.swapAt(3, 12)
+        m.swapAt(6, 9)
+        m.swapAt(7, 13)
+        m.swapAt(11, 14)
     }
     
     public mutating func invTrans() -> Bool{

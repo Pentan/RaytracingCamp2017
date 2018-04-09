@@ -141,7 +141,7 @@ public class Renderer {
             let microleeway = DispatchTimeInterval.microseconds(Int(prog.leeway * 1000000.0))
             let deadline = DispatchTime.now() + prog.interval
             
-            progresstimer?.scheduleRepeating(deadline: deadline, interval: prog.interval, leeway: microleeway)
+            progresstimer?.schedule(deadline: deadline, repeating: prog.interval, leeway: microleeway)
             progresstimer?.setEventHandler(handler: DispatchWorkItem(block: {
                 prog.action(self)
             }))
@@ -151,7 +151,7 @@ public class Renderer {
         var verbosetimer:DispatchSourceTimer? = nil
         if config.verboseInterval > 0.0 {
             verbosetimer = DispatchSource.makeTimerSource()
-            verbosetimer?.scheduleRepeating(deadline: DispatchTime.now() + config.verboseInterval, interval: config.verboseInterval)
+            verbosetimer?.schedule(deadline: DispatchTime.now() + config.verboseInterval, repeating: config.verboseInterval)
             verbosetimer?.setEventHandler(handler: DispatchWorkItem(block: { 
                 //print("verbose progress")
                 var yet = 0
