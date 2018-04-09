@@ -88,7 +88,7 @@ if renderconf.progressInterval > 0.0 {
         let img = rndr.currentImage
         let countstr = String(progressCount)
         var progressbase = "00000"
-        progressbase.characters.removeLast(countstr.characters.count)
+        progressbase.removeLast(countstr.count)
         let outname = "\(progressbase)\(countstr).bmp"
         
         ImageWriter.writeBMP(filepath: outname, width: Int32(img.width), height: Int32(img.height), data: img.buffer)

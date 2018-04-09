@@ -1,15 +1,18 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 
 import PackageDescription
 
 let package = Package(
     name: "SweetApple",
     targets: [
-        Target(name: "AppleBloom", dependencies: ["SweetAppleCore", "LinearAlgebra"]),
-        Target(name: "SweetAppleCore", dependencies: ["LinearAlgebra"]),
-        Target(name: "LinearAlgebra"),
+        .target(name: "AppleBloom", dependencies: ["SweetAppleCore", "LinearAlgebra"]),
+        .target(name: "SweetAppleCore", dependencies: ["LinearAlgebra"]),
+        .target(name: "LinearAlgebra"),
     ],
+    swiftLanguageVersions: [4]
+    /*,
     exclude: [
         "Sources/CBSD"
     ]
+ */
 )
