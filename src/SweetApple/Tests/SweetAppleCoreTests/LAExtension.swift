@@ -2,7 +2,7 @@
 import LinearAlgebra
 
 // extensions for test
-let kTestEPS = 1e-14
+public let kTestEPS = 1e-14
 
 extension Vector3 {
     public func isEqual(_ x:Double, _ y:Double, _ z:Double, _ accuracy:Double = kTestEPS) -> Bool {

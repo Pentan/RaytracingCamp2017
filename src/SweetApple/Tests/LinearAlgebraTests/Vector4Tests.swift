@@ -41,19 +41,19 @@ class Vector4Tests: XCTestCase {
     
     func testLength() {
         let v0 = Vector4(1.0, 1.0, 1.0, 1.0)
-        XCTAssertEqualWithAccuracy(v0.length(), 2.0, accuracy:kTestEPS)
+        XCTAssertEqual(v0.length(), 2.0, accuracy:kTestEPS)
     }
     
     func testDistance() {
         let v0 = Vector4(1.0, 1.0, 1.0, 1.0)
         let v1 = Vector4(-1.0, -1.0, -1.0, -1.0)
-        XCTAssertEqualWithAccuracy(v0.distance(v1), 4.0, accuracy:kTestEPS)
+        XCTAssertEqual(v0.distance(v1), 4.0, accuracy:kTestEPS)
     }
     
     func testNormalize() {
         var v0 = Vector4(1.0, 1.0, 1.0, 1.0)
         XCTAssertTrue(v0.normalize())
-        XCTAssertEqualWithAccuracy(v0.length(), 1.0, accuracy:kTestEPS)
+        XCTAssertEqual(v0.length(), 1.0, accuracy:kTestEPS)
     }
     
     func testNegate() {
@@ -69,32 +69,32 @@ class Vector4Tests: XCTestCase {
     }
     
     func testMaxMagnitude() {
-        XCTAssertEqualWithAccuracy(Vector4(1.0, 4.0, 0.0, 2.0).maxMagnitude(), 4.0, accuracy:kTestEPS)
-        XCTAssertEqualWithAccuracy(Vector4(1.0, 4.0, -10.0, 2.0).maxMagnitude(), -10.0, accuracy:kTestEPS)
+        XCTAssertEqual(Vector4(1.0, 4.0, 0.0, 2.0).maxMagnitude(), 4.0, accuracy:kTestEPS)
+        XCTAssertEqual(Vector4(1.0, 4.0, -10.0, 2.0).maxMagnitude(), -10.0, accuracy:kTestEPS)
     }
     
     func testMaxMagnitudeAndIndex() {
         let v0 = Vector4(1.0, 4.0, 0.0, 2.0)
         let res0 = v0.maxMagnitudeAndIndex()
         XCTAssertEqual(res0.index, 1)
-        XCTAssertEqualWithAccuracy(res0.value, 4.0, accuracy:kTestEPS)
+        XCTAssertEqual(res0.value, 4.0, accuracy:kTestEPS)
         
         let v1 = Vector4(1.0, 4.0, 0.0, -12.0)
         let res1 = v1.maxMagnitudeAndIndex()
         XCTAssertEqual(res1.index, 3)
-        XCTAssertEqualWithAccuracy(res1.value, -12.0, accuracy:kTestEPS)
+        XCTAssertEqual(res1.value, -12.0, accuracy:kTestEPS)
     }
     
     // 2 vector op
     func testVector4Distance() {
         let v0 = Vector4(1.0, 1.0, 1.0, 1.0)
         let v1 = Vector4(-1.0, -1.0, -1.0, -1.0)
-        XCTAssertEqualWithAccuracy(Vector4.distance(v0, v1), 4.0, accuracy:kTestEPS)
+        XCTAssertEqual(Vector4.distance(v0, v1), 4.0, accuracy:kTestEPS)
     }
     
     func testVector4Normalized() {
         let v0 = Vector4.normalized(Vector4(1.0, 1.0, 1.0, 1.0))
-        XCTAssertEqualWithAccuracy(v0.length(), 1.0, accuracy:kTestEPS)
+        XCTAssertEqual(v0.length(), 1.0, accuracy:kTestEPS)
     }
     
     func testVector4Negated() {
@@ -118,7 +118,7 @@ class Vector4Tests: XCTestCase {
         let v0 = Vector4(1.0, 2.0, 3.0, 4.0)
         let v1 = Vector4(5.0, 6.0, 7.0, 8.0)
         let d = v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w * v1.w
-        XCTAssertEqualWithAccuracy(Vector4.dot(v0, v1), d, accuracy:kTestEPS)
+        XCTAssertEqual(Vector4.dot(v0, v1), d, accuracy:kTestEPS)
     }
     
     func testVector4Lerp() {
@@ -131,7 +131,7 @@ class Vector4Tests: XCTestCase {
         let v0 = Vector4(1.0, 2.0, 3.0, 4.0)
         let v1 = Vector4(5.0, 0.0, 0.0, 0.0)
         let pv = Vector4.projected(v0, v1)
-        XCTAssertEqualWithAccuracy(pv.x, 1.0, accuracy:kTestEPS)
+        XCTAssertEqual(pv.x, 1.0, accuracy:kTestEPS)
     }
     
     //

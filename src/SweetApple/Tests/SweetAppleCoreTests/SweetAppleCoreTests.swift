@@ -21,7 +21,7 @@ class SweetAppleCoreTests: XCTestCase {
             // add camera
             let cam = Camera()
             cam.setLookat(Vector3(0.0, 0.0, 5.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0, 1.0, 0.0))
-            scene.registerCamera(cam)
+            _ = scene.registerCamera(cam)
             XCTAssertEqual(scene.cameras.count, 1, "register camera")
             
             // object setup
@@ -30,7 +30,7 @@ class SweetAppleCoreTests: XCTestCase {
             let obj = Object(geom, mat)
             
             // add objects
-            scene.registerObject(obj)
+            _ = scene.registerObject(obj)
             XCTAssertEqual(scene.objects.count, 1, "register object")
             
             // hit test

@@ -1,6 +1,11 @@
 import XCTest
-@testable import SweetAppleTests
 
-XCTMain([
-    testCase(SweetAppleTests.allTests),
-])
+import LinearAlgebraTests
+import SweetAppleTests
+
+var tests = [XCTestCaseEntry]()
+
+tests += LinearAlgebraTests.allTests()
+tests += SweetAppleCoreTests.allTests()
+
+XCTMain(tests)

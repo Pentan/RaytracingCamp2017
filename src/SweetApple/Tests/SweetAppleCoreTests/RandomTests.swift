@@ -28,7 +28,7 @@ class RandomTests: XCTestCase {
         
         XCTAssertGreaterThanOrEqual(min, 0.0)
         XCTAssertLessThan(max, 1.0)
-        XCTAssertEqualWithAccuracy(average, 0.5, accuracy: 0.1)
+        XCTAssertEqual(average, 0.5, accuracy: 0.1)
     }
 
     func testCount() {
@@ -56,8 +56,8 @@ class RandomTests: XCTestCase {
         }
         diff /= 64.0
         //print("bin min:\(min),max\(max),diff:\(diff)")
-        XCTAssertEqualWithAccuracy(Double(max - min) / Double(PERBIN), 0.0, accuracy: 0.5)
-        XCTAssertEqualWithAccuracy(diff, 0.0, accuracy: 0.01)
+        XCTAssertEqual(Double(max - min) / Double(PERBIN), 0.0, accuracy: 0.5)
+        XCTAssertEqual(diff, 0.0, accuracy: 0.01)
     }
     
     func testValue11() {
@@ -77,7 +77,7 @@ class RandomTests: XCTestCase {
         
         XCTAssertGreaterThan(min, -1.0)
         XCTAssertLessThan(max, 1.0)
-        XCTAssertEqualWithAccuracy(average, 0.0, accuracy: 0.01)
+        XCTAssertEqual(average, 0.0, accuracy: 0.01)
     }
     
     static var allTests = [

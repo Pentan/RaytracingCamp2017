@@ -330,9 +330,9 @@ class Matrix4Tests: XCTestCase {
         let vy = Matrix4.transformV3(m0, Vector3(0.0, 1.0, 0.0))
         let vz = Matrix4.transformV3(m0, Vector3(0.0, 0.0, 1.0))
         
-        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vx), 0.0, accuracy: kTestEPS, "bad transformed x")
-        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vy), 1.0, accuracy: kTestEPS, "bad transformed y")
-        XCTAssertEqualWithAccuracy(Vector3.dot(v0, vz), 0.0, accuracy: kTestEPS, "bad transformed z")
+        XCTAssertEqual(Vector3.dot(v0, vx), 0.0, accuracy: kTestEPS, "bad transformed x")
+        XCTAssertEqual(Vector3.dot(v0, vy), 1.0, accuracy: kTestEPS, "bad transformed y")
+        XCTAssertEqual(Vector3.dot(v0, vz), 0.0, accuracy: kTestEPS, "bad transformed z")
         
     }
     
