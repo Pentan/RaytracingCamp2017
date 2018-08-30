@@ -9,12 +9,16 @@ public struct Vector3 {
     public var y:Double
     public var z:Double
     
-    public enum Component: Int {
-        case kX = 0
-        case kY
-        case kZ
-        
-        static let iterate = [kX, kY, kZ]
+//    public enum Component: Int {
+//        case kX = 0
+//        case kY
+//        case kZ
+//
+//        static let iterate = [kX, kY, kZ]
+//    }
+    
+    public func array() -> [Double] {
+        return [x, y, z]
     }
     
     //
@@ -47,6 +51,12 @@ public struct Vector3 {
         self.z = z
     }
     
+    public mutating func setFromArray(_ a:[Double]) {
+        x = a[0]
+        y = a[1]
+        z = a[2]
+    }
+    
     public func length() -> Double {
         return (x * x + y * y + z * z).squareRoot()
     }
@@ -56,6 +66,7 @@ public struct Vector3 {
         return dv.length()
     }
     
+    @discardableResult
     public mutating func normalize() -> Bool {
         let l = length()
         
@@ -168,23 +179,48 @@ public struct Vector3 {
         return "Vector3(\(x),\(y),\(z))"
     }
     
-    public func componentValue(_ i:Component) -> Double {
+//    public func componentValue(_ i:Component) -> Double {
+//        switch i {
+//        case .kX: return x
+//        case .kY: return y
+//        case .kZ: return z
+//        }
+//    }
+    
+    public func componentAt(_ i:Int) -> Double {
         switch i {
-        case .kX: return x
-        case .kY: return y
-        case .kZ: return z
+        case 0: return x
+        case 1: return y
+        case 2: return z
+        default:
+            assertionFailure("Ilegal vector component")
+            return 0
         }
     }
     
-    public mutating func setComponentValue(_ i:Component, _ v:Double) {
+//    public mutating func setComponentValue(_ i:Component, _ v:Double) {
+//        switch i {
+//        case .kX: x = v
+//        case .kY: y = v
+//        case .kZ: z = v
+//        }
+//    }
+    
+    public mutating func setComponentAt(_ i:Int, _ v:Double) {
         switch i {
-        case .kX: x = v
-        case .kY: y = v
-        case .kZ: z = v
+        case 0: x = v
+        case 1: y = v
+        case 2: z = v
+        default:
+            assertionFailure("Ilegal vector component")
         }
     }
     
     // operators
+    static public prefix func - (v:Vector3) -> Vector3 {
+        return Vector3(-v.x, -v.y, -v.z)
+    }
+    
     static public func - (a:Vector3, b:Vector3) -> Vector3 {
         return Vector3(a.x - b.x, a.y - b.y, a.z - b.z)
     }

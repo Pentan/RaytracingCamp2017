@@ -444,6 +444,32 @@ public struct Matrix4 {
         return ret
     }
 
+    static public func makeFromQuaternion(_ qx:Double, _ qy:Double, _ qz:Double, _ qw:Double) -> Matrix4 {
+        var ret = Matrix4()
+        
+        ret.m[0] = 1.0 - 2.0 * (qy * qy + qz * qz)
+        ret.m[1] = 2.0 * (qx * qy + qz * qw)
+        ret.m[2] = 2.0 * (qz * qx - qw * qy)
+        ret.m[3] = 0.0
+        
+        ret.m[4] = 2.0 * (qx * qy - qz * qw)
+        ret.m[5] = 1.0 - 2.0 * (qz * qz + qx * qx)
+        ret.m[6] = 2.0 * (qy * qz + qw * qx)
+        ret.m[7] = 0.0
+        
+        ret.m[8] = 2.0 * (qz * qx + qw * qy)
+        ret.m[9] = 2.0 * (qy * qz - qx * qw)
+        ret.m[10] = 1.0 - 2.0 * (qx * qx + qy * qy)
+        ret.m[11] = 0.0
+        
+        ret.m[12] = 0.0
+        ret.m[13] = 0.0
+        ret.m[14] = 0.0
+        ret.m[15] = 1.0
+        
+        return ret
+    }
+    
     static public func makeOrtho(_ left:Double, _ right:Double, _ bottom:Double, _ top:Double, _ near:Double, _ far:Double) -> Matrix4 {
         var ret = Matrix4()
         ret.m[0] = 2.0 / (right - left)
@@ -500,24 +526,24 @@ public struct Matrix4 {
     static public func makeLookAt(_ eyepos:Vector3, _ lookat:Vector3, _ updir:Vector3) -> Matrix4 {
         var ret = Matrix4();
         
-        let tmpupv = Vector3.normalized(updir)
-        let eyev = Vector3.normalized(eyepos - lookat)
-        let sidev = Vector3.normalized(Vector3.cross(tmpupv, eyev))
-        let upv = Vector3.normalized(Vector3.cross(eyev, sidev))
+        let nrmupv = Vector3.normalized(updir)
+        let eyev = Vector3.normalized(lookat - eyepos)
+        let sidev = Vector3.normalized(Vector3.cross(eyev, nrmupv))
+        let upv = Vector3.normalized(Vector3.cross(sidev, eyev))
         
         ret.m[0] = sidev.x;
         ret.m[1] = upv.x;
-        ret.m[2] = eyev.x;
+        ret.m[2] = -eyev.x;
         ret.m[3] = 0.0;
         
         ret.m[4] = sidev.y;
         ret.m[5] = upv.y;
-        ret.m[6] = eyev.y;
+        ret.m[6] = -eyev.y;
         ret.m[7] = 0.0;
         
         ret.m[8] = sidev.z;
         ret.m[9] = upv.z;
-        ret.m[10] = eyev.z;
+        ret.m[10] = -eyev.z;
         ret.m[11] = 0.0;
         
         ret.m[12] = 0.0;
